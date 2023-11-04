@@ -79,17 +79,13 @@ class SmashGame {
             this.countdownTimer = setInterval(this.countdown, this.gameSpeed);
         });
     }
-
 }
 
-const views = {
-    squares: document.querySelectorAll('.square'),
-    enemy: document.querySelector('.enemy'),
-    time: document.querySelector('#time'),
-    score: document.querySelector('#score'),
-    btn: document.getElementById('play')
-}
-const { squares, enemy, time, score, btn } = views;
+ const squares = document.querySelectorAll('.square');
+ const enemy = document.querySelector('.enemy');
+ const time = document.querySelector('#time');
+ const score = document.querySelector('#score');
+ const btn = document.querySelector('#play');
 
 const game = new SmashGame(squares, enemy, time, score, btn);
 game.startGame();
