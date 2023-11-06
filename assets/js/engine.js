@@ -1,5 +1,3 @@
-import Modal from './modal.js'
-
 export default class SmashGame {
     constructor(squares, enemy, time, score, btn, modal) {
         //valores pegos para manipular dom
