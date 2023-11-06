@@ -1,11 +1,14 @@
+import Modal from './modal.js'
+
 export default class SmashGame {
-    constructor(squares, enemy, time, score, btn) {
+    constructor(squares, enemy, time, score, btn, modal) {
         //valores pegos para manipular dom
         this.squares = squares;
         this.enemy = enemy;
         this.time = time;
         this.score = score;
         this.btn = btn;
+        this.modal = modal;
 
         this.gameSpeed = 1000; // add velocidade dos intervalos uniforme
         this.hitPosition = 0; // add guardar posição do 'enemy'
@@ -19,7 +22,9 @@ export default class SmashGame {
         this.countdown = this.countdown.bind(this);
         this.selectRandomSquare = this.selectRandomSquare.bind(this);
         this.verifyEnemy = this.verifyEnemy.bind(this);
+        this.openResult = this.openResult.bind(this);
         this.startGame = this.startGame.bind(this);
+        this.initGame = this.initGame.bind(this);
     }
     //método pra diminuir tempo e resetar jogo
     countdown() {
@@ -28,11 +33,13 @@ export default class SmashGame {
             this.time.textContent = this.currentTime;
         }
         if (this.currentTime <= 0) {
+            this.openResult();
             clearInterval(this.countdownTimer);
             clearInterval(this.timerId);
             clearInterval(this.timerId);
             !this.verifyEnemy();
-            this.score.textContent = this.result;            
+            this.score.textContent = this.result;
+            this.gameRunning = false;
         }
     }
     // método pra selecionar o quadrado aleatório
@@ -66,17 +73,29 @@ export default class SmashGame {
             });
         });
     }
-    // método para iniciar o jogo ao clique no botão de play
+    openResult() {
+        this.modal.newHTMLModal("Fim de Jogo", this.result, 'Jogar Novamente!')
+        this.modal.container.classList.add('active')
+    }
+    // método de inicializações
     startGame() {
-        this.btn.addEventListener('click', () => { 
-            this.verifyEnemy();
-            this.currentTime = 5;
-            score.textContent = 0;
-            this.result = 0;
-            clearInterval(this.timerId); // limpa intervalo remanescente do click
-            this.timerId = setInterval(this.selectRandomSquare, this.gameSpeed);
-            this.countdownTimer = setInterval(this.countdown, this.gameSpeed);
+        this.verifyEnemy();
+        this.currentTime = 10;
+        score.textContent = 0;
+        this.result = 0;
+        clearInterval(this.timerId); // limpa intervalo remanescente do click
+        this.timerId = setInterval(this.selectRandomSquare, this.gameSpeed);
+        this.countdownTimer = setInterval(this.countdown, this.gameSpeed);
+    }
+    // método para iniciar o jogo ao clique no botão de play
+    initGame() {
+        this.btn.addEventListener('click', () => {
+            if (this.gameRunning) return
+            this.startGame();
         });
+        this.modal.btnPlay.addEventListener('click', () => {
+            this.startGame();
+        })
     }
 }
 
