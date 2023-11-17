@@ -1,12 +1,12 @@
 export default class SmashGame {
     constructor(squares, enemy, time, score, btn, modal) {
         //valores pegos para manipular dom
-        this.squares = squares;
-        this.enemy = enemy;
-        this.time = time;
-        this.score = score;
-        this.btn = btn;
-        this.modal = modal;
+        this.squares = document.querySelectorAll(squares);
+        this.enemy = document.querySelector(enemy);
+        this.time = document.querySelector(time);
+        this.score = document.querySelector(score);
+        this.btn = document.querySelector(btn);
+        this.modal = document.querySelector(modal);
 
         this.gameSpeed = 1000; // add velocidade dos intervalos uniforme
         this.hitPosition = 0; // add guardar posição do 'enemy'
