@@ -5,5 +5,5 @@ const modal = new Modal('#open', '#close', '#modalPlay', '.container-modal', '#t
 modal.init();
 
 const game = new SmashGame('.square', '.enemy', '#time', '#score', '#play', modal);
-game.initGame();
+game.init();
 

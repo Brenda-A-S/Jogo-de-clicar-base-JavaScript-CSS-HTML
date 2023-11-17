@@ -17,12 +17,18 @@ export default class SmashGame {
         this.countdownTimer; // add intervalo pra diminuir o tempo
         this.gameRunning = false; //add pra tentar fazer a velocidade do intervalo não aumentar
 
+        if (this.title === undefined) this.title = 'Você venceu!';
+        else this.title = title;
+        if (this.text === undefined) this.text = `Sua pontuação foi de: ${this.result}`;
+        else this.text = text;
+        if (this.btn === undefined) this.btn = 'Jogar novamente!';
+        else this.btn = btn;
+
         this.countdown = this.countdown.bind(this);
         this.selectRandomSquare = this.selectRandomSquare.bind(this);
         this.verifyEnemy = this.verifyEnemy.bind(this);
         this.openResult = this.openResult.bind(this);
         this.startGame = this.startGame.bind(this);
-        this.initGame = this.initGame.bind(this);
     }
     //método pra diminuir tempo e resetar jogo
     countdown() {
@@ -71,9 +77,16 @@ export default class SmashGame {
             });
         });
     }
+    //metódo para setar titulo e texto para modal de resultado
+    setResultContent(title, text, btn) {
+        this.title = title;
+        this.text = text;
+        this.btn = btn;
+    }
+    //método para abrir o resultado na modal
     openResult() {
-        this.modal.newHTMLModal("Fim de Jogo", this.result, 'Jogar Novamente!')
-        this.modal.container.classList.add('active')
+        this.modal.newHTMLModal(this.title, this.text, this.btn);
+        this.modal.toggleModal();
     }
     // método de inicializações
     startGame() {
@@ -86,7 +99,7 @@ export default class SmashGame {
         this.countdownTimer = setInterval(this.countdown, this.gameSpeed);
     }
     // método para iniciar o jogo ao clique no botão de play
-    initGame() {
+    init() {
         this.btn.addEventListener('click', () => {
             if (this.gameRunning) return
             this.startGame();
