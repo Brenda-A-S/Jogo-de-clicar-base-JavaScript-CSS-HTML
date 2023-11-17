@@ -1,12 +1,11 @@
 export default class SmashGame {
-    constructor(squares, enemy, time, score, btn, modal) {
+    constructor(squares, enemy, time, score, modal) {
         //valores pegos para manipular dom
         this.squares = document.querySelectorAll(squares);
         this.enemy = document.querySelector(enemy);
         this.time = document.querySelector(time);
         this.score = document.querySelector(score);
-        this.btn = document.querySelector(btn);
-        this.modal = document.querySelector(modal);
+        this.modal = modal;
 
         this.gameSpeed = 1000; // add velocidade dos intervalos uniforme
         this.hitPosition = 0; // add guardar posição do 'enemy'
@@ -21,14 +20,14 @@ export default class SmashGame {
         else this.title = title;
         if (this.text === undefined) this.text = `Sua pontuação foi de: ${this.result}`;
         else this.text = text;
-        if (this.btn === undefined) this.btn = 'Jogar novamente!';
-        else this.btn = btn;
+        if (this.btnText === undefined) this.btnText = 'Jogar novamente!';
+        else this.btnText = btn;
 
         this.countdown = this.countdown.bind(this);
         this.selectRandomSquare = this.selectRandomSquare.bind(this);
-        this.verifyEnemy = this.verifyEnemy.bind(this);
-        this.openResult = this.openResult.bind(this);
+        
         this.startGame = this.startGame.bind(this);
+        this.addGameEvents = this.addGameEvents.bind(this);
     }
     //método pra diminuir tempo e resetar jogo
     countdown() {
@@ -81,11 +80,11 @@ export default class SmashGame {
     setResultContent(title, text, btn) {
         this.title = title;
         this.text = text;
-        this.btn = btn;
+        this.btnText = btn;
     }
     //método para abrir o resultado na modal
     openResult() {
-        this.modal.newHTMLModal(this.title, this.text, this.btn);
+        this.modal.newHTMLModal(this.title, this.text, this.btnText);
         this.modal.toggleModal();
     }
     // método de inicializações
@@ -98,15 +97,20 @@ export default class SmashGame {
         this.timerId = setInterval(this.selectRandomSquare, this.gameSpeed);
         this.countdownTimer = setInterval(this.countdown, this.gameSpeed);
     }
-    // método para iniciar o jogo ao clique no botão de play
-    init() {
-        this.btn.addEventListener('click', () => {
+    // método para adicionar eventos
+    addGameEvents() {
+        this.modal.btnPlay.addEventListener('click', () => {
             if (this.gameRunning) return
             this.startGame();
         });
         this.modal.btnPlay.addEventListener('click', () => {
             this.startGame();
         })
+    }
+    // método para iniciar o jogo ao clique no botão de play
+    init() {
+        this.addGameEvents();
+        return this;
     }
 }
 
