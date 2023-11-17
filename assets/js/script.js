@@ -7,17 +7,9 @@ const time = document.querySelector('#time');
 const score = document.querySelector('#score');
 const btn = document.querySelector('#play');
 
-const title = document.querySelector('#title');
-const text = document.querySelector('#text');
-
-const btnOpen = document.querySelector('#open');
-const btnClose = document.querySelector('#close');
-const btnPlay = document.querySelector('#modalPlay');
-const containerModal = document.querySelector('.container-modal');
-
-const modal = new Modal(btnOpen, btnClose, btnPlay, containerModal, title, text);
+const modal = new Modal('#open', '#close', '#modalPlay', '.container-modal', '#title', '#text');
 const game = new SmashGame(squares, enemy, time, score, btn, modal);
 
 game.initGame();
 
-modal.initModal();
+modal.init();

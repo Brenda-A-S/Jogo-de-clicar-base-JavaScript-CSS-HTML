@@ -1,38 +1,46 @@
 export default class Modal {
-    constructor(btnOpen, btnClose, btnPlay, container, title, text) {
-        this.btnOpen = btnOpen;
-        this.btnClose = btnClose;
-        this.btnPlay = btnPlay;
-        this.container = container;
-        this.title = title;
-        this.text = text;
+    constructor(btnOpen, btnClose, btnPlay, containerModal, title, text) {
+
+        this.btnOpen = document.querySelector(btnOpen);
+        this.btnClose = document.querySelector(btnClose);
+        this.btnPlay = document.querySelector(btnPlay);
+        this.containerModal = document.querySelector(containerModal);
+        this.title = document.querySelector(title);
+        this.text = document.querySelector(text);
+
         this.toggleModal = this.toggleModal.bind(this);
-        this.outsideClickModal = this.outsideClickModal.bind(this);
-        this.newHTMLModal = this.newHTMLModal.bind(this);
-        this.initModal = this.initModal.bind(this);
+        this.eventToggleModal = this.eventToggleModal.bind(this);
+        this.outsideClick = this.outsideClick.bind(this);
     }
-    toggleModal(event) {
+    toggleModal() {
+        this.containerModal.classList.toggle('active');
+    }
+    eventToggleModal(event) {
         event.preventDefault();
-        this.container.classList.toggle('active');
+        this.toggleModal();
     }
-    outsideClickModal(event) {
-        if (event.target === this) {
-            toggleModal(event);
+    outsideClick(event) {
+        if (event.target === this.containerModal) {
+            this.toggleModal();
         }
     }
-    newHTMLModal(newTitle, newText, newBtn){
+    newHTMLModal(newTitle, newText, newBtn) {
         this.title.textContent = newTitle;
         this.text.textContent = newText;
         this.btnPlay.textContent = newBtn;
     }
-    initModal() {
+    addEvents() {
         if (this.btnOpen) {
             this.btnOpen.addEventListener('click', this.toggleModal);
         }
-        if (this.btnClose && this.container) {
+        if (this.btnClose && this.containerModal) {
             this.btnClose.addEventListener('click', this.toggleModal);
             this.btnPlay.addEventListener('click', this.toggleModal);
-            this.container.addEventListener('click', this.cliqueForaModal);
+            this.containerModal.addEventListener('click', this.outsideClick);
         }
+    }
+    init() {
+        this.addEvents();
+        return this;
     }
 }
