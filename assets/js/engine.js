@@ -47,19 +47,23 @@ export default class SmashGame {
         audio.volume = 0.2;
         audio.play();
     }
-    // método pra diminuir tempo e resetar jogo
+    // método pra diminuir tempo e chamar função de reset
     countdown() {
         if (this.currentTime > 0) {
             this.currentTime--;
             this.time.textContent = this.currentTime;
         }
         if (this.currentTime <= 0) {
-            this.openResult();
-            this.clearIntervals();
-            this.removeEnemyEvent();
-            this.score.textContent = this.result;
-            this.gameRunning = false;
+            this.endGame();
         }
+    }
+    // método pra resetar jogo ao fim do tempo
+    endGame() {
+        this.openResult();
+        this.clearIntervals();
+        this.removeEnemyEvent();
+        this.score.textContent = this.result;
+        this.gameRunning = false;
     }
     // método pra selecionar o quadrado aleatório
     selectRandomSquare() {
