@@ -64,6 +64,7 @@ export default class SmashGame {
     // método pra selecionar o quadrado aleatório
     selectRandomSquare() {
         if (this.currentTime > 0) {
+            this.hitPosition = null;
             this.squares.forEach(square => square.classList.remove('enemy'));
             let randomNum = Math.floor(Math.random() * 9);
             this.hitPosition = randomNum;
@@ -98,7 +99,6 @@ export default class SmashGame {
                 this.result++;
             }
             this.score.textContent = this.result;
-            this.hitPosition = null;
             this.selectRandomSquare();
             this.resetCurrentInterval();
         }
