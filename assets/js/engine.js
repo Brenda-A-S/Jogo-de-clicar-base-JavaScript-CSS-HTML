@@ -30,24 +30,24 @@ export default class SmashGame {
         this.startGame = this.startGame.bind(this);
         this.addGameEvents = this.addGameEvents.bind(this);
     }
-    //
+    // método que limpa intervalos 
     clearIntervals() {
         clearInterval(this.countdownTimer);
         clearInterval(this.timerId);
         clearInterval(this.timerId);
     }
-    //
+    // método que reseta intervalo atual 
     resetCurrentInterval() {
         clearInterval(this.timerId);
         this.timerId = setInterval(this.selectRandomSquare, this.gameSpeed);
     }
-    //
+    // metódo que toca um som
     playSound(audioName) {
         let audio = new Audio(`assets/audio/${audioName}.mp3`);
         audio.volume = 0.2;
         audio.play();
     }
-    //método pra diminuir tempo e resetar jogo
+    // método pra diminuir tempo e resetar jogo
     countdown() {
         if (this.currentTime > 0) {
             this.currentTime--;
@@ -71,7 +71,7 @@ export default class SmashGame {
             this.squares[randomNum].classList.add('enemy');
         }
     }
-    // método para verificar se acertou o inimigo
+    // método que adiciona evento de verificar inimigo
     addEnemyEvent() {
         if (this.gameRunning) {
             return;
@@ -84,6 +84,7 @@ export default class SmashGame {
             });
         });
     }
+    // método que remove evento de verificar inimigo
     removeEnemyEvent() {
         this.gameRunning = true;
         this.squares.forEach(square => {
@@ -92,6 +93,7 @@ export default class SmashGame {
             });
         });
     }
+    // método para verificar se acertou o inimigo
     verifyEnemy(square) {
         if (this.hitPosition === +square.id) {
             if (this.currentTime > 0) {
@@ -115,7 +117,7 @@ export default class SmashGame {
         this.modal.newHTMLModal(this.title, this.text, this.btnText);
         this.modal.containerModal.classList.add('active');
     }
-    // método de inicializações
+    // método para inciar jogo
     startGame() {
         // this.playSound('time');
         this.addEnemyEvent();
